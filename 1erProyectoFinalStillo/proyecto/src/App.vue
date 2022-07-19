@@ -18,7 +18,7 @@
       <Registro 
       v-show="!estoyEnLogin"
       @enviarRegistro="recibirRegistro" 
-      @emitAgregarAlCarrito="recibirAgregarAlCarrito"/>
+      />
     </div>
     
     <div v-else>
@@ -27,6 +27,7 @@
     @changeFlagFromMain="recibiElMensaje" 
     :productos="listadoDeProductos"
     @emitVerDetalle="recibirVerDetalle"
+    @emitAgregarAlCarrito="recibirAgregarAlCarrito"
     />
     
     <Carrito :carro='carrito' @emitActualizarCarritoPrincipal="recibirActualizarAlCarrito"/>
@@ -141,8 +142,8 @@ export default {
       this.carrito.push(payload)
     },
     recibirActualizarAlCarrito(payload){
-          this.carrito = [...payload]
-          //this.carrito = Object.assing(this.carrito,payload)
+          //this.carrito = [...payload]
+          this.carrito = Object.assing(this.carrito,payload)
     },
     recibirVerDetalle(payload){
       this.selected = payload
