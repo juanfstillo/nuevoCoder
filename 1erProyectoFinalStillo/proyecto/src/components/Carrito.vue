@@ -12,7 +12,6 @@
             <hr>
             </li>
         </ul>
-            <p class="text-center">Precio Total: {{precioTotal}}</p>
             <button class="btn btn-secondary btn-lg mt-4">Pagar</button>
         <hr>
 
