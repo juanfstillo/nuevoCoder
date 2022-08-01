@@ -34,7 +34,7 @@
             </div>
             <div class="col-md-12 mb-2">
               <br>
-                <input type="button" class="btn btn-secondary btn-lg mb-2" value="Registrar" @click="addUsuario"/>
+                <input type="button" class="btn btn-secondary btn-lg mb-2" value="Registrar" @click="createUser"/>
             </div>
             </form>
     </div>
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'Formulario',
     data() {
@@ -60,17 +61,22 @@ export default {
         }
     },
     methods: {
-        addUsuario() {
-            if (this.checkForm()){
-                //this.$emit('emit-agregar-usuario', this.usuario);
-                this.usuario.nombre = "";
-                this.usuario.email = "";
-                this.usuario.edad = "";
-                this.usuario.password = "";
-            } else {
-                alert("Error!");
+          async createUser(){
+            if(this.checkForm()){
+              const newUser = {
+              name: this.usuario.nombre,
+              password: this.usuario.password,
+              email: this.usuario.email,
+              edad: this.usuario.edad,
+              isAdmin: false,
+            };
+          let resp = await axios.post(
+          "https://62e6d7cd69bd03090f764b0b.mockapi.io/api/users",newUser
+            );
+            this.usuarios = resp.data;
+            this.$router.push('/login')
             }
-        },
+          },
         checkForm () {
             return (this.validarNombre() && this.validarMail() && this.validarEdad() && this.validarPassword())
             },
