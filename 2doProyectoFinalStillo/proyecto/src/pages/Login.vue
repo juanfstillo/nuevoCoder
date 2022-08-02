@@ -78,6 +78,11 @@ export default {
 };
 </script>
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
+
+body{
+    font-family: Nunito;
+    }
 .gradient-custom {
 /* fallback for old browsers */
 background: #f093fb;

@@ -125,6 +125,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
+
+body{
+    font-family: Nunito;
+}
 .app {
     background: linear-gradient(to bottom right, rgba(240, 147, 251, 1), rgba(245, 87, 108, 1))
 }
@@ -132,5 +137,6 @@ export default {
     color:white;
     font-size: 20px;
 }
+
 
 </style>

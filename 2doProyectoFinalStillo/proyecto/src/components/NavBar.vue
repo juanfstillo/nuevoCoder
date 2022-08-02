@@ -56,5 +56,9 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
 
+body{
+    font-family: Nunito;
+}
 </style>

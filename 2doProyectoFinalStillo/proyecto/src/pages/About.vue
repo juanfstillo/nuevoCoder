@@ -60,5 +60,9 @@ export default {
  #social-tw:hover {color: #4099FF;transition:all .001s;}
  #social-gp:hover {color: #d34836;transition:all .001s;}
  #social-em:hover {color: #f39c12;transition:all .001s;}
+body{
+    font-family: Nunito;
+
+}
 
 </style>
