@@ -55,15 +55,13 @@ export default {
     ...mapActions("usuarios", ["getUsuariosAPI", "setUsuarioLogueado"]),
 
     preValidarLogin(usuarios){
+        let acceso = {"correcto":false, "usuario": ""};
       for(const us of usuarios){
         if(us.name == this.usuario && us.password == this.password){
-          let acceso = {"correcto":true, "usuario": us};
-              return acceso;
-          }else{
-            acceso = {"correcto":false}          
-              return acceso;
-            }
+            acceso = {"correcto":true, "usuario": us};
+          }
         }
+        return acceso;
       },
       validarLogin(){
         debugger
