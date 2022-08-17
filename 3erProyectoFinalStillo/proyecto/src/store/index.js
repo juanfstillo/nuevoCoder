@@ -77,6 +77,7 @@ export default new Vuex.Store({
         },
         async deleteCart(context,payload){
         },
+
         async login(context){
             try{
                 let resp = await axios.get('https://62e6d7cd69bd03090f764b0b.mockapi.io/api/users')
@@ -85,6 +86,14 @@ export default new Vuex.Store({
                   console.log(error)
               }
           },
+
+          async register(context,newUser) {
+            try{
+                await axios.post('https://62e6d7cd69bd03090f764b0b.mockapi.io/api/users', newUser)
+            } catch(err){
+                console.log(err)
+            }
+        },
     }
 })
     

@@ -21,6 +21,9 @@
                             <input type="password" id="password" class="form-control form-control-lg" v-model="password"/>
                             <label class="form-label" for="password">Contraseña</label>
                         </div>
+                       
+                        <div class="alert alert-danger" v-if="error_login" role="alert">Usuario o contraseña incorrecta</div>
+
                     </div>
 
                     <div class="mt-4 pt-2">
@@ -45,13 +48,18 @@ export default {
     return {
         usuario:'',
         password:'',
+        error_login: false
     }
    },
     methods: {
-        validarLogin(){
-            this.$store.dispatch('login')
-            let data = this.getUsers.find((x)=> x.name === this.usuario && x.password === this.password);
-            console.log(data);
+       
+       async validarLogin(){
+            this.error_login = false;
+            await this.$store.dispatch('login')
+            let data = this.getUsers.find((x)=> x.email === this.usuario && x.password === this.password);
+            if(!data){
+                this.error_login = true
+            }
             localStorage.clear();
             if (data) {
             this.$store.commit('SET_CURRENT_USER', data)

@@ -62,18 +62,6 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['agregarUsuario']),
-        createUser(){
-            if(this.checkForm()){
-            this.agregarUsuario(this.usuario);
-                name: this.usuario.name;
-                password: this.usuario.password;
-                email: this.usuario.email;
-                edad: this.usuario.edad;
-                isAdmin: false;
-            }
-            this.$router.push('/main')
-          },
         checkForm () {
             return (this.validarNombre() && this.validarMail() && this.validarEdad() && this.validarPassword())
             },
@@ -115,7 +103,22 @@ export default {
                 this.mensajePassword = "Clave inválida"
                 return false;
             }
-        }
+        },
+        createUser(){
+            if(this.checkForm()){
+                let newUser = {
+                name: this.usuario.name,
+                password: this.usuario.password,
+                email: this.usuario.email,
+                edad: this.usuario.edad,
+                isAdmin: false
+            }
+            console.log(newUser)
+            debugger
+            this.$store.dispatch('register', newUser)
+            this.$router.push('/main')
+          }
+    }
     }
 }
 </script>
