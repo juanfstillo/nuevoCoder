@@ -38,47 +38,38 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 export default {
-   name:'LoginPage',
+    name:'LoginPage',
    data(){
     return {
         usuario:'',
         password:'',
     }
    },
-   mounted(){
-    this.getUsuariosAPI();
-        localStorage.clear();
+    methods: {
+        validarLogin(){
+            this.$store.dispatch('login')
+            let data = this.getUsers.find((x)=> x.name === this.usuario && x.password === this.password);
+            console.log(data);
+            localStorage.clear();
+            if (data) {
+            this.$store.commit('SET_CURRENT_USER', data)
+            localStorage.setItem("isLogged", true);
+            localStorage.setItem("user", JSON.stringify(data));
+            
+            if (data?.isAdmin) {
+                localStorage.setItem("isAdmin", true);
+                this.$router.push("/admin");
+            } else {
+                localStorage.setItem("isAdmin", false);
+                this.$router.push("/main");
+            }
+            }
+        }
     },
-     methods: {
-    ...mapActions("usuarios", ["getUsuariosAPI", "setUsuarioLogueado"]),
-
-    preValidarLogin(usuarios){
-        let acceso = {"correcto":false, "usuario": ""};
-      for(const us of usuarios){
-        if(us.name == this.usuario && us.password == this.password){
-            acceso = {"correcto":true, "usuario": us};
-          }
-        }
-        return acceso;
-      },
-      validarLogin(){
-        debugger
-        let resultado = this.preValidarLogin()
-        if(resultado.correcto){
-          this.setUsuarioLogueado(resultado.usuario)
-        }
-        if(resultado.usuario.isAdmin){
-            this.$router.push('/admin')
-        }else{
-            this.$router.push('/main')
-        }
-      },
-      },
-      computed:{
-      ...mapState(["usuarios",["usuarios","usuarioLogueado"]]),
-      ...mapGetters(["getUsuarios","getUsuarioLogueado"])
+    computed:{
+      ...mapGetters({getUsers:'getUsers'})
       }
   
 };

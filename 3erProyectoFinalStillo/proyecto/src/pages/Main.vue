@@ -8,6 +8,9 @@
                 <div class="card-body">
                 <h5 class="card-title">{{item.title}}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">${{item.price}}</h6>
+                <p class="card-subtitle mb-2 text-muted">Stock: {{item.amount}} unidades <p/>
+                <label> Cantidad al carrito:</label>
+                <input type="text" placeholder="Cantidad" v-model:= "item.amount">
                 <button @click="agregarAlCarrito(item.id)" class="btn btn-secondary mb-2">Agregar al carrito</button>
                 <button @click="verDetalle(item.id)" class="btn btn-primary">Ver Detalle</button>
             </div>
@@ -18,48 +21,41 @@
 </template>
 <script>
 import axios from "axios"
+import {mapGetters} from 'vuex';
 export default {
   name: "MainPage",
-  data(){
-    return {
-        text:"productos",
-        products: [],
+  async mounted(){
+    let isLogged = localStorage.getItem('isLogged');
+    if(isLogged != true){
+      this.$router.push('/login')
     }
+    this.$router.dispatch('setProducts')
   },
   methods:{
-      agregarAlCarrito(payload){
-      this.$router.push({ name: "carrito", params: { id: payload } });
-      },
-      verDetalle(payload){
-      this.$router.push({ name: "detalle", params: { id: payload } });
-
-        },
-        
-
+     agregarUnCarrito(producto){
+      let payload = {
+        productId: producto.id,
+        userId: this.auth.id,
+        amount: producto.amount
+        }
+        this.$store.dispatch('addCart',carrito)
+        //this.$router.push({ name: "carrito", params: { id: payload } });
+      }  
   },
-  async mounted() {
-    /*eslint-disable*/
-    debugger;
-
-    let isLogged = localStorage.getItem("isLogged");
-
-    if (isLogged != "true") {
-      this.$router.push("/login");
-    }
-
-    let resp = await axios.get(
-      "https://62e6d7cd69bd03090f764b0b.mockapi.io/api/productos"
-    );
-    this.products = resp.data;
+  computed:{
+    ...mapGetters({
+      products:'getProducts',
+      auth:'auth'
+    })
   },
   filters: {
     capitalize: function (value) {
     if (!value) return ''
     value = value.toString()
     return value.charAt(0).toUpperCase() + value.slice(1)
+    }
   }
 }
-};
 </script>
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');

@@ -91,7 +91,13 @@ export default {
         },
     restarUno(){
         this.cantidadCarrito >= 1 ? this.cantidadCarrito -= 1: null;
-        }, 
+        },
+      
+  },
+  computed:{
+    carrito(){
+      return this.$store.getter.carrito
+    }
   }
 };
 </script>
