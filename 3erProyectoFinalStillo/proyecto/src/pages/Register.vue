@@ -114,7 +114,6 @@ export default {
                 isAdmin: false
             }
             console.log(newUser)
-            debugger
             this.$store.dispatch('register', newUser)
             this.$router.push('/main')
           }

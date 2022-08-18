@@ -54,6 +54,7 @@ export default new Vuex.Store({
             try{
                 let resp = await axios.get('https://62e6d7cd69bd03090f764b0b.mockapi.io/api/productos')
                 context.commit('SET_PRODUCTS',resp.data)
+                console.log(resp.data)
             }catch(error){
                 console.log(error)
             }

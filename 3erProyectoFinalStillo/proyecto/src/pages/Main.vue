@@ -11,8 +11,8 @@
                 <p class="card-subtitle mb-2 text-muted">Stock: {{item.amount}} unidades <p/>
                 <label> Cantidad al carrito:</label>
                 <input type="text" placeholder="Cantidad" v-model:= "item.amount">
-                <button @click="agregarAlCarrito(item.id)" class="btn btn-secondary mb-2">Agregar al carrito</button>
-                <button @click="verDetalle(item.id)" class="btn btn-primary">Ver Detalle</button>
+                <button @click="agregarUnCarrito(item.id)" class="btn btn-secondary mb-2">Agregar al carrito</button>
+                <!-- <button @click="verDetalle(item.id)" class="btn btn-primary">Ver Detalle</button> -->
             </div>
         </div>
      </div>
@@ -20,15 +20,21 @@
 </div>
 </template>
 <script>
-import {mapGetters} from 'vuex';
+import {mapGetters,mapActions,mapState} from 'vuex';
 export default {
   name: "MainPage",
   async mounted(){
+    this.setProducts();
     let isLogged = localStorage.getItem('isLogged');
     if(isLogged != true){
       this.$router.push('/login')
     }
-    this.$router.dispatch('setProducts')
+    this.$store.dispatch('setProducts')
+  },
+  data(){
+    return{
+      text:'productos',
+    }
   },
   methods:{
      agregarUnCarrito(producto){
@@ -39,13 +45,12 @@ export default {
         }
         this.$store.dispatch('addCart',carrito)
         //this.$router.push({ name: "carrito", params: { id: payload } });
-      }  
+      },
+      ...mapActions(['setProducts'])
   },
   computed:{
-    ...mapGetters({
-      products:'getProducts',
-      auth:'auth'
-    })
+    ...mapState(['products']),
+    ...mapGetters(['getProducts'])
   },
   filters: {
     capitalize: function (value) {
