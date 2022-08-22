@@ -26,7 +26,7 @@ export default {
   async mounted(){
     this.setProducts();
     let isLogged = localStorage.getItem('isLogged');
-    if(isLogged != true){
+    if(Boolean(isLogged) != true){
       this.$router.push('/login')
     }
     this.$store.dispatch('setProducts')

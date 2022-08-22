@@ -20,7 +20,7 @@ export default new VueRouter({
             props: true
         },
         {
-            path: '/',
+            path: '/main',
             name: 'main',
             component: () => import('./pages/Main'),
             props: true
